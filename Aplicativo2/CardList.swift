@@ -17,7 +17,7 @@ struct CardList: View {
         }
     }
 }
-
+cuzcuz
 #Preview {
     CardList()
 }
