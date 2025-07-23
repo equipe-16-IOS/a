@@ -1,3 +1,11 @@
+//
+//  CategoriaCard.swift
+//  Aplicativo2
+//
+//  Created by iredefbmac_28 on 23/07/25.
+//
+
+
 import SwiftUI
 
 struct CategoriaCard: View {

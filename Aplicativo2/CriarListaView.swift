@@ -1,45 +1,107 @@
+//
+//  CriarListaView.swift
+//  Aplicativo2
+//
+//  Created by iredefbmac_28 on 23/07/25.
+//
 import SwiftUI
 
-struct CriarListaView: View {
+struct CriarLista: View {
     @State private var nomeLista = ""
     @State private var data = ""
     @State private var descricao = ""
-    @State private var corSelecionada: Color = .blue
+    @State private var corSelecionada = 0
+    
+    let cores: [Color] = [.white, .green.opacity(0.5), .purple.opacity(0.5), .pink.opacity(0.5)]
     
     var body: some View {
-        Form {
-            Section(header: Text("Nome da Lista")) {
-                TextField("Ex: Compras da Semana", text: $nomeLista)
-            }
+        VStack(alignment: .leading, spacing: 18) {
             
-            Section(header: Text("Data")) {
-                TextField("Ex: 30/06/2025", text: $data)
-            }
+            // TÍTULO
+            Text("Criar Lista")
+            //                .frame(maxWidth: .infinity, alignment: .center)
+                .font(.system(size: 50, weight: .bold))
+                .foregroundColor(.blue)
+            //                .padding(.top, 10)
             
-            Section(header: Text("Descrição")) {
-                TextField("Ex: Comprar carnes e temperos pro churrasco", text: $descricao)
-            }
+            // CAMPOS
+            //            Group {
+            // NOME DA LISTA
+            Text("Nome da Lista")
+                .font(.system(size: 30, weight: .semibold))
             
-            Section(header: Text("Cor")) {
-                ColorPicker("Selecione uma cor", selection: $corSelecionada)
-            }
+            TextField("Ex: Compras da Semana", text: $nomeLista)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            //                    .frame(width: 500)
             
-            Section {
-                Button("Criar Lista") {
-                    // Ação para criar a lista
+            // DATA
+            Text("Data")
+                .font(.system(size: 30, weight: .semibold))
+            
+            TextField("Ex: 30/06/2025", text: $data)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            //                    .frame(width: 500)
+            
+            // DESCRIÇÃO
+            Text("Descrição")
+                .font(.system(size: 30, weight: .semibold))
+            
+            TextEditor(text: $descricao)
+                .foregroundColor(.black)
+                .padding(8)
+                .background(Color.clear)
+            //                    .frame(width: 500, height: 150)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.gray.opacity(0.5), lineWidth: 1.10)
+                )
+            //            }
+            
+            // COR
+            Text("Cor")
+                .font(.system(size: 30, weight: .semibold))
+            
+            HStack {
+                ForEach(0..<cores.count, id: \.self) { index in
+                    Circle()
+                        .fill(cores[index])
+                        .frame(width: 50, height: 50)
+                        .overlay(
+                            Circle()
+                                .stroke(corSelecionada == index ? Color.blue : Color.clear, lineWidth: 2)
+                        )
+                        .onTapGesture {
+                            corSelecionada = index
+                        }
                 }
-                .frame(maxWidth: .infinity)
+            }
+            
+            Spacer()
+            
+            // BOTÃO
+            HStack {
+                Spacer()
+                
+                Button(action: {
+                    print("Lista criada: \(nomeLista), \(data), \(descricao), cor: \(corSelecionada)")
+                }) {
+                    HStack {
+                        Text("Criar")
+                        Image(systemName: "chevron.right")
+                    }
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 70)
+                    .padding(.vertical, 20)
+                    .background(Color.blue)
+                    .cornerRadius(30)
+                }
+                .padding(.trailing, 40)
             }
         }
-        .navigationTitle("Criar Lista")
-        .navigationBarTitleDisplayMode(.inline)
+        .padding(30)
     }
 }
 
-struct CriarListaView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationStack {
-            CriarListaView()
-        }
-    }
+#Preview {
+    CriarLista()
 }
