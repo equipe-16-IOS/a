@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ConfiguracoesView: View {
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 20) {
                
                 Spacer()

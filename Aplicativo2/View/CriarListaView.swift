@@ -7,12 +7,15 @@
 import SwiftUI
 
 struct CriarLista: View {
+    @ObservedObject var viewmodel = ListViewModel.shared
     @State private var nomeLista = ""
     @State private var data = ""
     @State private var descricao = ""
     @State private var corSelecionada = 0
+    @State private var selectedDate: Date = Date()
     
-    let cores: [Color] = [.white, .green.opacity(0.5), .purple.opacity(0.5), .pink.opacity(0.5)]
+    // TODO: MUDAR PROS ASSETS
+    let cores: [Color] = [.white, .green.opacity(0.5), .purple.opacity(0.5), Color.AppColors.babyPink]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
@@ -37,6 +40,10 @@ struct CriarLista: View {
             // DATA
             Text("Data")
                 .font(.system(size: 30, weight: .semibold))
+            
+          
+            DatePicker("Selecione", selection: $selectedDate, displayedComponents: .date)
+                .datePickerStyle(.compact)
             
             TextField("Ex: 30/06/2025", text: $data)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -83,7 +90,10 @@ struct CriarLista: View {
                 Spacer()
                 
                 Button(action: {
-                    print("Lista criada: \(nomeLista), \(data), \(descricao), cor: \(corSelecionada)")
+//                    print("Lista criada: \(nomeLista), \(data), \(descricao), cor: \(corSelecionada)")
+                    viewmodel.addList(name: nomeLista, date: selectedDate, description: descricao, color: .black, icon: "maca")
+                    
+                    print(viewmodel.lists.first?.name ?? "")
                 }) {
                     HStack {
                         Text("Criar")
