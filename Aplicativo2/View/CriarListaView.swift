@@ -14,21 +14,18 @@ struct CriarLista: View {
     @State private var corSelecionada = 0
     @State private var selectedDate: Date = Date()
     
-    // TODO: MUDAR PROS ASSETS
-    let cores: [Color] = [.white, .green.opacity(0.5), .purple.opacity(0.5), Color.AppColors.babyPink]
+    let cores: [Color] = [.AppColors.babyBlue, .AppColors.paleLavender, .AppColors.softPeach,.AppColors.lightMustard,.AppColors.mintCream, Color.AppColors.babyPink]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             
             // TÍTULO
             Text("Criar Lista")
-            //                .frame(maxWidth: .infinity, alignment: .center)
-                .font(.system(size: 50, weight: .bold))
+                .font(.title2)
+                .bold()
                 .foregroundColor(.blue)
-            //                .padding(.top, 10)
-            
-            // CAMPOS
-            //            Group {
+                .frame(maxWidth: .infinity, alignment: .center)
+
             // NOME DA LISTA
             Text("Nome da Lista")
                 .font(.system(size: 30, weight: .semibold))
