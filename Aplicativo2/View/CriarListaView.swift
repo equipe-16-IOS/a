@@ -14,8 +14,7 @@ struct CriarLista: View {
     @State private var corSelecionada = 0
     @State private var selectedDate: Date = Date()
     
-    // TODO: MUDAR PROS ASSETS
-    let cores: [Color] = [.white, .green.opacity(0.5), .purple.opacity(0.5), Color.AppColors.babyPink]
+    let cores: [Color] = [.AppColors.babyBlue, .AppColors.paleLavender, .AppColors.softPeach,.AppColors.lightMustard,.AppColors.mintCream, Color.AppColors.babyPink]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {

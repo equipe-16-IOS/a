@@ -11,22 +11,21 @@ struct TabBarView: View {
         TabView {
             HomeView()
                 .tabItem {
-                    Label("Home", systemImage: "house")
-                }
-
+                    Label("Home", image:.home)                }
+            
             CardListView()
                 .tabItem {
-                    Label("Minhas Listas", systemImage: "list.bullet")
+                    Label("Minhas Listas", image: .list)
                 }
-
+            
             ConfiguracoesView()
                 .tabItem {
-                    Label("Configurações", systemImage: "gearshape")
-                }
+                    Label("Configurações", image: .settings)        }
         }
     }
 }
+    
+    #Preview {
+        TabBarView()
+    }
 
-#Preview {
-    TabBarView()
-}
