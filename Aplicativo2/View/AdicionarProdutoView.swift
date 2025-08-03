@@ -10,7 +10,7 @@ import SwiftUI
 struct AdicionarProdutoView: View {
     @ObservedObject var viewModel: AddProductViewModel = .shared
     @State private var nomeProduto = ""
-    @State var calorias = ""
+    @State private var calorias = ""
     @State private var preco = ""
     @State private var validade: Date = Date()
     @State private var categoria = ""
