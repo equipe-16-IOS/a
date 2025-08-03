@@ -32,7 +32,7 @@ struct CriarLista: View {
             
             TextField("Ex: Compras da Semana", text: $nomeLista)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-            //                    .frame(width: 500)
+  
             
             // DATA
             Text("Data")
