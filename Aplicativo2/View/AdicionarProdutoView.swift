@@ -42,13 +42,13 @@ struct AdicionarProdutoView: View {
                     .font(.title2)
                     .bold()
                     .foregroundColor(.blue)
+                Spacer()
             }
             .navigationBarBackButtonHidden(true)
-            
         }
     }
 }
+    #Preview {
+        AdicionarProdutoView()
+    }
 
-#Preview {
-    AdicionarProdutoView()
-}
