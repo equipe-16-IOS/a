@@ -5,6 +5,7 @@
 //  Created by Izadora de Oliveira Albuquerque Montenegro on 23/07/25.
 //
 
+
 import SwiftUI
 
 struct AdicionarProdutoView: View {
@@ -16,72 +17,105 @@ struct AdicionarProdutoView: View {
     @State private var categoria = ""
     @State private var imagem: Data?
     @Environment(\.dismiss) var dismiss
-    
+
     var body: some View {
         NavigationView {
-            
-            VStack {
-                HStack {
-                 /*   Button(action: {
-                        dismiss()
-                    }, label: {
-                        Image(systemName: "chevron.left")
-                            .foregroundStyle(.black)
-                            .padding()
-                            .overlay {
-                                Circle()
-                                    .stroke(Color.black, lineWidth: 1)
-                            }
-                    })*/
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
                     
-                    Spacer()
+                    // Botão Voltar
+                    HStack {
+                        Button(action: {
+                            dismiss()
+                        }) {
+                            Image(systemName: "chevron.left")
+                                .foregroundStyle(.black)
+                                .padding(8)
+                                .background(Circle().stroke(Color.gray.opacity(0.5), lineWidth: 1))
+                        }
+                        Spacer()
+                    }
+                    .padding(.top, 10)
                     
-                }
-                .padding()
-                           Text("Adicionar Produto")
+                    // Título
+                    Text("Adicionar Produto")
                         .font(.title2)
                         .bold()
                         .foregroundColor(.blue)
-                    Spacer()
+                        .frame(maxWidth: .infinity)
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom, 10)
                     
-                VStack(alignment: .leading, spacing: 18){
-                    
-                    //NOME DO PRODUTO
-                    Text( "Nome do Produto")
-                    TextField("Ex: Macarrão Parafuso", text: $nomeProduto)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                    
-                    //CALORIAS
-                    Text( "Calorias")
-                    TextField("Ex: 250.00kcal", text: $calorias)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                    
-                    //PREÇO
-                    Text( "Preço")
-                    TextField("Ex: R$ 15.00", text: $preco)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                    
-                    //VALIDADE
-                    DatePicker("Validade", selection: $validade, displayedComponents: .date)
-                        .datePickerStyle(.compact)
-                    
-                    //CATEGORIAS
-                    
-                    Text("Categorias")
-                    TextField("Ex: Frutas", text: $categoria)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                    
+                    Group {
+                        Text("Nome do Produto").fontWeight(.semibold)
+                        TextField("Ex: Macarrão Parafuso", text: $nomeProduto)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                        Text("Calorias").fontWeight(.semibold)
+                        TextField("Ex: 250 kcal", text: $calorias)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                        Text("Preço").fontWeight(.semibold)
+                        TextField("Ex: R$ 15,00", text: $preco)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                        Text("Validade").fontWeight(.semibold)
+                        DatePicker("", selection: $validade, displayedComponents: .date)
+                            .datePickerStyle(.compact)
+                            .labelsHidden()
+
+                        Text("Categorias").fontWeight(.semibold)
+                        TextField("Ex: Frutas", text: $categoria)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
                     }
-                Spacer()
-                //TODO ADD BOTÃO
-                //BOTÃO
-              
+
+                    // Área para imagem
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                        .foregroundColor(.gray.opacity(0.5))
+                        .frame(height: 120)
+                        .overlay(
+                            VStack {
+                                Image(.addImg)
+                                    .font(.system(size: 28))
+                                    .padding(.bottom, 4)
+                                Text("Adicione uma imagem")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                            }
+                        )
+                        .padding(.top, 10)
+
+                    // Botão Adicionar centralizado e compacto
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            // ação de salvar
+                        }) {
+                            Text("Adicionar")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .frame(width: 220, height: 50)
+                                .background(
+                                    LinearGradient(colors: [Color.blue, Color.blue.opacity(0.8)],
+                                                   startPoint: .leading,
+                                                   endPoint: .trailing)
+                                )
+                                .cornerRadius(24)
+                        }
+                        Spacer()
+                    }
+                    .padding(.top, 20)
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
+                .padding(.bottom, 40)
             }
-            .navigationBarBackButtonHidden(true)
-            .padding(.horizontal, 20)
+            .navigationBarHidden(true)
         }
     }
 }
-    #Preview {
-        AdicionarProdutoView()
-    }
+
+#Preview {
+    AdicionarProdutoView()
+}
