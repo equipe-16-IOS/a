@@ -22,7 +22,7 @@ struct AdicionarProdutoView: View {
             
             VStack {
                 HStack {
-                    Button(action: {
+                 /*   Button(action: {
                         dismiss()
                     }, label: {
                         Image(systemName: "chevron.left")
@@ -32,7 +32,7 @@ struct AdicionarProdutoView: View {
                                 Circle()
                                     .stroke(Color.black, lineWidth: 1)
                             }
-                    })
+                    })*/
                     
                     Spacer()
                     
@@ -78,6 +78,7 @@ struct AdicionarProdutoView: View {
               
             }
             .navigationBarBackButtonHidden(true)
+            .padding(.horizontal, 20)
         }
     }
 }
