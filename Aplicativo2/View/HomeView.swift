@@ -6,9 +6,14 @@
 //
 import SwiftUI
 
+enum Route: Hashable {
+    case expandedCategory(category: ProductCategory), addProuct, addList
+}
+
 struct HomeView: View {
+    @State var path = NavigationPath()
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
         VStack(alignment: .leading, spacing: 20) {
             
             // Topo azul com botão +
@@ -57,13 +62,30 @@ struct HomeView: View {
             // Grid com as categorias
             LazyVGrid(columns: [GridItem(), GridItem()], spacing: 20) {
                 
-                NavigationLink(destination: ContentView(), label: {
+                Button(action: {
+                    path.append(Route.expandedCategory(category: .frutasEVegetais))
+                }, label: {
                     CategoriaCard(imageName: "frutas", title: "Frutas e Vegetais")
                 })
-               
-                CategoriaCard(imageName: "bebidas", title: "Bebidas")
-                CategoriaCard(imageName: "carnes", title: "Carnes")
-                CategoriaCard(imageName: "produtos", title: "Meus Produtos")
+                
+                Button(action: {
+                    path.append(Route.expandedCategory(category: .bebidas))
+                }, label: {
+                    CategoriaCard(imageName: "bebidas", title: "Bebidas")
+                })
+                
+                Button(action: {
+                    path.append(Route.expandedCategory(category: .carnes))
+                }, label: {
+                    CategoriaCard(imageName: "carnes", title: "Carnes")
+                })
+                
+                Button(action: {
+                    path.append(Route.expandedCategory(category: .meusProdutos))
+                }, label: {
+                    CategoriaCard(imageName: "produtos", title: "Meus Produtos")
+                })
+                
             }
             .padding(.horizontal)
             
@@ -80,6 +102,16 @@ struct HomeView: View {
             })
             .padding(.horizontal)
             .padding(.bottom, 20)
+        }
+        .navigationDestination(for: Route.self) { route in
+            switch route {
+            case .addList:
+                CriarLista()
+            case .addProuct:
+                AdicionarProdutoView()
+            case .expandedCategory(let category):
+                    ExpandedCategoryView(category: category)
+            }
         }
     }
     }

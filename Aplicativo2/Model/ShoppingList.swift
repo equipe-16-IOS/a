@@ -7,12 +7,14 @@
 
 import SwiftUI
 
-class ShoppingList {
+class ShoppingList: Identifiable {
+    var id: UUID
     var name: String
     var date: Date
     var description: String
     var color: Color
     var icon: String
+    var products: [Product]
     
     init(name: String, date: Date, description: String, color: Color, icon: String) {
         self.name = name
@@ -20,5 +22,7 @@ class ShoppingList {
         self.description = description
         self.color = color
         self.icon = icon
+        self.products = []
+        self.id = UUID()
     }
 }
