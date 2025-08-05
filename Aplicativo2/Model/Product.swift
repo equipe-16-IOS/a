@@ -7,21 +7,23 @@
 
 import SwiftUI
 
-class Product {
+class Product: Identifiable {
+    var id: UUID
     var name: String
     var calories: Int
     var price: Double
     var validity: Date
     var category: ProductCategory
-    var productImage: Data
+    var productImage: Data?
     
-    init(name: String, calories: Int, price: Double, validity: Date, category: ProductCategory, productImage: Data) {
+    init(name: String, calories: Int, price: Double, validity: Date, category: ProductCategory, productImage: Data?) {
         self.name = name
         self.calories = calories
         self.price = price
         self.validity = validity
         self.category = category
         self.productImage = productImage
+        self.id = UUID()
     }
 }
 

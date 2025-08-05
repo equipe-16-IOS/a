@@ -7,7 +7,9 @@
 import SwiftUI
 
 struct ConfiguracoesView: View {
-    @StateObject private var viewModel = ConfiguracoesViewModel()
+    @StateObject private var viewModel = PreferencesViewModel()
+    @State var isNotificationsEnabled: Bool = false
+    @State var selectedLanguage: LanguageOptions = .portuguese
     
     var body: some View {
         NavigationView {
@@ -27,7 +29,7 @@ struct ConfiguracoesView: View {
                     Text("Notificações:")
                         .fontWeight(.semibold)
                     Spacer()
-                    Toggle("", isOn: $viewModel.notificacoesAtivadas)
+                    Toggle("", isOn: $isNotificationsEnabled)
                         .labelsHidden()
                         .tint(.blue)
                 }
@@ -37,9 +39,9 @@ struct ConfiguracoesView: View {
                     Text("Idioma:")
                         .fontWeight(.semibold)
                     Spacer()
-                    Picker(selection: $viewModel.idiomaSelecionado, label: Text(viewModel.idiomaSelecionado)) {
-                        ForEach(viewModel.idiomasDisponiveis, id: \.self) {
-                            Text($0)
+                    Picker(selection: $selectedLanguage, label: Text(selectedLanguage.displayText)) {
+                        ForEach(LanguageOptions.allCases, id: \.self) { language in
+                            Text(language.displayText)
                         }
                     }
                     .pickerStyle(MenuPickerStyle())
@@ -59,6 +61,9 @@ struct ConfiguracoesView: View {
                 Spacer()
             }
             .padding()
+            .onChange(of: isNotificationsEnabled) {
+                viewModel.toggleNotifications(value: isNotificationsEnabled)
+            }
         }
     }
 }

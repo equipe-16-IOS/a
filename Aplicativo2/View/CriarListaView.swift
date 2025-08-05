@@ -7,6 +7,7 @@
 import SwiftUI
 
 struct CriarLista: View {
+    @Environment(\.dismiss) var dismiss
     @ObservedObject var viewmodel = ListViewModel.shared
     @State private var nomeLista = ""
     @State private var descricao = ""
@@ -131,6 +132,9 @@ struct CriarLista: View {
                             color: .black,
                             icon: "maca"
                         )
+                        
+                        dismiss()
+                        
                         print(viewmodel.lists.first?.name ?? "")
                     }) {
                         Text("Criar")

@@ -10,13 +10,15 @@ import SwiftUI
 class ListViewModel: ObservableObject {
     @Published var lists: [ShoppingList] = []
     
-    // Estudarem singleton
-    
     static let shared = ListViewModel()
     private init() {}
     
     func addList(name: String, date: Date, description: String, color: Color, icon: String) {
         let newList = ShoppingList(name: name, date: date, description: description, color: color, icon: icon)
         lists.append(newList)
+    }
+    
+    func addProductOnList(product: Product, list: ShoppingList) {
+        list.products.append(product)
     }
 }

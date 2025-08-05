@@ -9,17 +9,17 @@
 import SwiftUI
 
 struct AdicionarProdutoView: View {
-    @ObservedObject var viewModel: AddProductViewModel = .shared
+    // ALTERAR TIPOS PARA TIPOS CORRETOS DO MODELO PRODUCT!!!
+    @ObservedObject var productViewModel: ProductViewModel = .shared
+    @Environment(\.dismiss) var dismiss
     @State private var nomeProduto = ""
     @State private var calorias = ""
     @State private var preco = ""
     @State private var validade: Date = Date()
     @State private var categoria = ""
     @State private var imagem: Data?
-    @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        NavigationView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     
@@ -90,7 +90,9 @@ struct AdicionarProdutoView: View {
                     HStack {
                         Spacer()
                         Button(action: {
-                            // ação de salvar
+                            productViewModel.addProduct(name: nomeProduto, calories: Int(calorias) ?? 0, price: Double(preco) ?? 0, validity: validade, category: categoria == "Oi" ? .bebidas : .carnes, productImage: imagem)
+                            
+                            dismiss()
                         }) {
                             Text("Adicionar")
                                 .font(.headline)
@@ -112,7 +114,6 @@ struct AdicionarProdutoView: View {
                 .padding(.bottom, 40)
             }
             .navigationBarHidden(true)
-        }
     }
 }
 
