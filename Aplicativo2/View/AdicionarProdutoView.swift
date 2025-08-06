@@ -88,8 +88,8 @@ struct AdicionarProdutoView: View {
                         .keyboardType(.numberPad)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     //TODO tornar para versão atual
-                        .onChange(of: caloriasText) { newValue in
-                            if let value = Int(newValue) {
+                        .onChange(of: caloriasText) { oldValue, newValue in
+                            if let value = Int (newValue) {
                                 calorias = value
                             } else {
                                 calorias = 0
@@ -101,7 +101,7 @@ struct AdicionarProdutoView: View {
                         .keyboardType(.decimalPad)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     //TODO tornar para versão atual
-                        .onChange(of: precoText) { newValue in
+                        .onChange(of: precoText) { oldValue, newValue in
                             let cleanValue = newValue.replacingOccurrences(of: ",", with: ".")
                             if let value = Double(cleanValue) {
                                 preco = value
@@ -167,7 +167,7 @@ struct AdicionarProdutoView: View {
                             .cornerRadius(24)
                     }
                     Spacer()
-                    
+                    	
                 }
                 .padding(.top, 20)
             }

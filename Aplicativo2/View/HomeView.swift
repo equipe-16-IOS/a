@@ -15,18 +15,17 @@ struct HomeView: View {
     var body: some View {
         NavigationStack(path: $path) {
         VStack(alignment: .leading, spacing: 20) {
-            
-            // Topo azul com botão +
-            NavigationLink(destination: CriarLista(), label: {
+            Button {
+                path.append(Route.addList)
+            } label: {
                 HStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Crie sua lista e")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                        Text("adicione produtos")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                    }
+                   
+                    Text("Crie sua lista e\("\n")adicione produtos")
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.leading)
+                        .font(.headline)
+                            
+                    
                     Spacer()
                     ZStack {
                         Circle()
@@ -40,8 +39,10 @@ struct HomeView: View {
                 .padding()
                 .background(Color.blue)
                 .cornerRadius(20)
-            })
-            .padding(.horizontal)
+                .padding(.horizontal)
+            }
+                
+         
             
             // Barra de busca
             // TODO: TORNAR UTILIZAVEL
@@ -92,14 +93,16 @@ struct HomeView: View {
             Spacer()
             
             // Botão azul embaixo
-            NavigationLink(destination: AdicionarProdutoView(), label: {
+            Button {
+                path.append(Route.addProuct)
+            }    label: {
                 Text("Adicionar Produtos")
                     .foregroundColor(.white)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(Color.blue)
                     .cornerRadius(20)
-            })
+            }
             .padding(.horizontal)
             .padding(.bottom, 20)
         }

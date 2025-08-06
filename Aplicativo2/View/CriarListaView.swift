@@ -125,12 +125,14 @@ struct CriarLista: View {
                 HStack {
                     Spacer()
                     Button(action: {
+                        let cor = cores[corSelecionada]
+                        let icon = icones[iconeSelecionado]
                         viewmodel.addList(
                             name: nomeLista,
                             date: selectedDate,
                             description: descricao,
-                            color: .black,
-                            icon: "maca"
+                            color : cor,
+                            icon: icon,
                         )
                         
                         dismiss()
@@ -155,6 +157,7 @@ struct CriarLista: View {
             .padding(.horizontal, 20)
             .padding(.top, 20)
             .padding(.bottom, 40)
+            .navigationBarBackButtonHidden(true)
         }
     }
 
