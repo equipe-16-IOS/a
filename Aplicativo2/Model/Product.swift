@@ -5,9 +5,9 @@
 //  Created by Izadora de Oliveira Albuquerque Montenegro on 23/07/25.
 //
 
-import SwiftUI
+import Foundation
 
-class Product: Identifiable {
+class Product: Identifiable, Codable {
     var id: UUID
     var name: String
     var calories: Int
@@ -16,21 +16,28 @@ class Product: Identifiable {
     var category: ProductCategory
     var productImage: Data?
     
-    init(name: String, calories: Int, price: Double, validity: Date, category: ProductCategory, productImage: Data?) {
+    init(name: String, calories: Int, price: Double, validity: Date, category: ProductCategory, productImage: Data? = nil) {
+        self.id = UUID()
         self.name = name
         self.calories = calories
         self.price = price
         self.validity = validity
         self.category = category
         self.productImage = productImage
-        self.id = UUID()
     }
+    
+
 }
 
-enum ProductCategory: String, CaseIterable {
-    case frutasEVegetais, carnes, bebidas, meusProdutos
+//TODO adicionar mais categorias
+enum ProductCategory: String, CaseIterable, Codable, Identifiable {
+    case frutasEVegetais
+    case carnes
+    case bebidas
+    case meusProdutos
     
-    // substituir pelas imagens de vdd aquii
+    var id: String { self.rawValue }
+    
     var imageName: String {
         switch self {
         case .frutasEVegetais:
