@@ -167,6 +167,7 @@ struct AdicionarProdutoView: View {
                             .cornerRadius(24)
                     }
                     Spacer()
+                    
                 }
                 .padding(.top, 20)
             }
