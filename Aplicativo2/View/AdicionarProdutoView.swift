@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import PhotosUI
 
 struct CategoriaSelectorView: View {
     @Binding var selectedCategory: ProductCategory
@@ -47,9 +47,11 @@ struct AdicionarProdutoView: View {
     @State private var categoria: ProductCategory = .frutasEVegetais
     @State private var imagem: Data? = nil
     
-    
     @State private var caloriasText: String = ""
     @State private var precoText: String = ""
+    
+    @State private var selectedItem: PhotosPickerItem?
+    @State private var selectedImage: Image?
     
     @State private var mostrarAlerta = false
     
@@ -57,6 +59,7 @@ struct AdicionarProdutoView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 
+                // Botão voltar
                 HStack {
                     Button {
                         dismiss()
@@ -70,6 +73,7 @@ struct AdicionarProdutoView: View {
                 }
                 .padding(.top, 10)
                 
+                // Título
                 Text("Adicionar Produto")
                     .font(.title2)
                     .bold()
@@ -78,6 +82,7 @@ struct AdicionarProdutoView: View {
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 10)
                 
+                // Campos de texto
                 Group {
                     Text("Nome do Produto").fontWeight(.semibold)
                     TextField("Ex: Macarrão Parafuso", text: $nomeProduto)
@@ -87,9 +92,8 @@ struct AdicionarProdutoView: View {
                     TextField("Ex: 250", text: $caloriasText)
                         .keyboardType(.numberPad)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                    //TODO tornar para versão atual
                         .onChange(of: caloriasText) { oldValue, newValue in
-                            if let value = Int (newValue) {
+                            if let value = Int(newValue) {
                                 calorias = value
                             } else {
                                 calorias = 0
@@ -100,7 +104,6 @@ struct AdicionarProdutoView: View {
                     TextField("Ex: 15.00", text: $precoText)
                         .keyboardType(.decimalPad)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                    //TODO tornar para versão atual
                         .onChange(of: precoText) { oldValue, newValue in
                             let cleanValue = newValue.replacingOccurrences(of: ",", with: ".")
                             if let value = Double(cleanValue) {
@@ -119,27 +122,49 @@ struct AdicionarProdutoView: View {
                     CategoriaSelectorView(selectedCategory: $categoria)
                 }
                 
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
-                    .foregroundColor(.gray.opacity(0.5))
-                    .frame(height: 120)
-                    .overlay(
-                        VStack {
-                            Image(.addImg)
-                                .font(.system(size: 28))
-                                .padding(.bottom, 4)
-                            //TODO tornar utilizavel
-                            Text("Adicione uma imagem")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
+                // Seletor de imagem
+                PhotosPicker(selection: $selectedItem, matching: .images) {
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+                        .foregroundColor(.gray.opacity(0.5))
+                        .frame(width: 354, height: 153)
+                        .overlay {
+                            if let selectedImage {
+                                selectedImage
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 354, height: 153)
+                                    .clipped()
+                                    .cornerRadius(10)
+                            } else {
+                                VStack {
+                                    Image(.addImg)
+                                        .font(.system(size: 28))
+                                        .padding(.bottom, 4)
+                                    Text("Adicione uma imagem")
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                }
+                            }
                         }
-                    )
-                    .padding(.top, 10)
+                        .padding(.top, 10)
+                }
+                .onChange(of: selectedItem) { _, newItem in
+                    Task {
+                        if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                            imagem = data
+                            if let uiImage = UIImage(data: data) {
+                                selectedImage = Image(uiImage: uiImage)
+                            }
+                        }
+                    }
+                }
                 
+                // Botão adicionar
                 HStack {
                     Spacer()
                     Button {
-                        guard !nomeProduto.isEmpty, calorias > 0, preco > 0 else {
+                        guard !nomeProduto.isEmpty, calorias > 0, preco > 0, imagem != nil else {
                             mostrarAlerta = true
                             return
                         }
@@ -167,7 +192,6 @@ struct AdicionarProdutoView: View {
                             .cornerRadius(24)
                     }
                     Spacer()
-                    	
                 }
                 .padding(.top, 20)
             }
