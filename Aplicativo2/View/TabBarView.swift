@@ -11,7 +11,8 @@ struct TabBarView: View {
         TabView {
             HomeView()
                 .tabItem {
-                    Label("Home", image:.home)                }
+                    Label("Home", image:.home)
+                }
             
             CardListView()
                 .tabItem {
@@ -20,12 +21,13 @@ struct TabBarView: View {
             
             ConfiguracoesView()
                 .tabItem {
-                    Label("Configurações", image: .settings)        }
+                    Label("Configurações", image: .settings)
+                }
         }
     }
 }
     
-    #Preview {
-        TabBarView()
-    }
+#Preview {
+    TabBarView()
+}
 

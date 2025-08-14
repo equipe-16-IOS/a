@@ -7,8 +7,10 @@
 
 import SwiftUI
 import PhotosUI
+import SwiftData
 
 struct CategoriaSelectorView: View {
+    
     @Binding var selectedCategory: ProductCategory
     
     var body: some View {
@@ -37,6 +39,7 @@ struct CategoriaSelectorView: View {
 }
 
 struct AdicionarProdutoView: View {
+    @Environment(\.modelContext) var context
     @ObservedObject var productViewModel: ProductViewModel = .shared
     @Environment(\.dismiss) var dismiss
     
@@ -175,7 +178,7 @@ struct AdicionarProdutoView: View {
                             price: preco,
                             validity: validade,
                             category: categoria,
-                            productImage: imagem
+                            productImage: imagem, context: context
                         )
                         
                         dismiss()
