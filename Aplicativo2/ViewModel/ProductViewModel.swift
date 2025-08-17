@@ -6,17 +6,43 @@
 //
 
 import SwiftUI
+import SwiftData
 
 class ProductViewModel: ObservableObject {
     @Published var products: [Product] = []
     
-    private init() {}
+    private init() {
+        initDefaultProducts()
+    }
+    
     static let shared = ProductViewModel()
     
-    func addProduct(name: String, calories: Int, price: Double, validity: Date, category: ProductCategory, productImage: Data?) {
+    private func initDefaultProducts() {
+        products = ProductRepository.all
+    }
+    
+    func addProduct(name: String, calories: Int, price: Double, validity: Date, category: ProductCategory, productImage: Data?, context: ModelContext) {
         let newProduct = Product(name: name, calories: calories, price: price, validity: validity, category: category, productImage: productImage)
         products.append(newProduct)
         
+        context.insert(newProduct)
+        
+        do {
+            try context.save()
+        } catch {
+            print("Erro ao adicionar novo produto \(error)")
+        }
+        
         print(products.last?.name ?? "Lista vazia sem last")
     }
+    
+    func fetchProducts(context: ModelContext) {
+        let descriptor = FetchDescriptor<Product>()
+        
+        products = try! context.fetch(descriptor)
+        
+        products.insert(contentsOf: ProductRepository.all, at: 0)
+    }
+    
+    
 }
