@@ -17,7 +17,12 @@ struct CardListView: View {
                     
                     VStack(spacing: 16) {
                         ForEach(listViewModel.lists) { list in
-                            CardList(titleList: list.name, iconList: list.icon, color: list.color, itemCount: list.products.count)
+                            
+                           NavigationLink(destination: {
+                               ExpandedListView(list: list)
+                           }, label: {
+                               CardList(titleList: list.name, iconList: list.icon, color: list.color, itemCount: list.products.count)
+                           })
                         }
                     }
                     .padding(.horizontal)
