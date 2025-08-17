@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import SwiftData
 
-class Product: Identifiable, Codable {
+@Model
+class Product: Identifiable {
     var id: UUID
     var name: String
     var calories: Int
@@ -15,8 +17,9 @@ class Product: Identifiable, Codable {
     var validity: Date
     var category: ProductCategory
     var productImage: Data?
+    var defaultProductImage: String?
     
-    init(name: String, calories: Int, price: Double, validity: Date, category: ProductCategory, productImage: Data? = nil) {
+    init(name: String, calories: Int, price: Double, validity: Date, category: ProductCategory, productImage: Data? = nil, defaultProductImage: String? = nil) {
         self.id = UUID()
         self.name = name
         self.calories = calories
@@ -24,8 +27,8 @@ class Product: Identifiable, Codable {
         self.validity = validity
         self.category = category
         self.productImage = productImage
+        self.defaultProductImage = defaultProductImage
     }
-    
 
 }
 
