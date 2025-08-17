@@ -14,7 +14,7 @@ class ListViewModel: ObservableObject {
     private init() {}
     
     func addList(name: String, date: Date, description: String, color: Color, icon: String) {
-        let newList = ShoppingList(name: name, date: date, description: description, color: color, icon: icon)
+        let newList = ShoppingList(name: name, date: date, descricao: description, color: color, icon: icon)
         lists.append(newList)
     }
     
